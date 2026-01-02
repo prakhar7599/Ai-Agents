@@ -4,8 +4,9 @@
   "scripts": {
     "ng": "ng",
     "config": "node scripts/set-env.js",
+    "prebuild": "npm run config",
     "start": "npm run config && ng serve",
-    "build": "npm run config && ng build",
+    "build": "ng build",
     "build:dev": "npm run config && ng build --configuration development",
     "watch": "npm run config && ng build --watch --configuration development",
     "test": "ng test"
