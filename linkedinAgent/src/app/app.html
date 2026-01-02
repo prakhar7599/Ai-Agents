@@ -3,6 +3,8 @@
     <h1>LinkedIn Post Generator AI Agent</h1>
     <p>Upload your resume.</p>
     <p>*Since this is a demo, the api sometimes can show max quote reached error.</p>
+    <!-- Debug: Test modal button (remove in production) -->
+    <!-- <button class="btn btn-secondary" (click)="testModal()" style="margin-top: 10px;">Test API Key Modal</button> -->
   </header>
 
   <div class="actions">
@@ -36,6 +38,44 @@
       <span>{{error()}}</span>
     </div>
     <button class="close-error" (click)="error.set(null)">&times;</button>
+  </div>
+  }
+
+  <!-- API Key Modal -->
+  @if (showApiKeyModal()) {
+  <div class="modal-overlay" (click)="closeApiKeyModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>API Limit Reached</h2>
+        <button class="modal-close" (click)="closeApiKeyModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-description">
+          The daily API limit has been reached. To continue using this application, please enter your own Google Gemini API key.
+        </p>
+        <div class="api-key-input-group">
+          <label for="apiKey">Google Gemini API Key</label>
+          <input 
+            type="password" 
+            id="apiKey"
+            [value]="apiKeyInput()"
+            (input)="apiKeyInput.set($any($event.target).value)"
+            placeholder="Enter your API key (starts with AIza...)"
+            class="api-key-input"
+          />
+          <p class="api-key-help">
+            Your API key will be stored locally in your browser and will only be used for API requests.
+            <a href="https://makersuite.google.com/app/apikey" target="_blank" rel="noopener noreferrer">
+              Get your API key here
+            </a>
+          </p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="closeApiKeyModal()">Cancel</button>
+        <button class="btn btn-primary" (click)="saveApiKey()">Save & Continue</button>
+      </div>
+    </div>
   </div>
   }
 

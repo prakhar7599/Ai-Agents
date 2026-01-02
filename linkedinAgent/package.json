@@ -6,6 +6,7 @@
     "config": "node scripts/set-env.js",
     "start": "npm run config && ng serve",
     "build": "npm run config && ng build",
+    "build:dev": "npm run config && ng build --configuration development",
     "watch": "npm run config && ng build --watch --configuration development",
     "test": "ng test"
   },
