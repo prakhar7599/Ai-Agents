@@ -12,6 +12,24 @@ ng serve
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
+## Setup Environment Variables
+
+To run the application, you need to configure the environment file.
+
+1. Create a folder named `environments` inside the `src` directory if it doesn't exist.
+2. Create a file named `environment.ts` inside that folder.
+3. Add the following content to `src/environments/environment.ts`:
+
+```typescript
+export const environment = {
+  production: false,
+  googleApiKey: 'AIz......M'
+};
+```
+
+Note: Make sure to replace the placeholder API key with your actual Google API key if you have one.
+
+
 ## Code scaffolding
 
 Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
