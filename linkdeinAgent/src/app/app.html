@@ -1,0 +1,169 @@
+<div class="container">
+  <header>
+    <h1>LinkedIn Post Generator AI Agent</h1>
+    <p>Upload your resume.</p>
+    <p>*Since this is a demo, the api sometimes can show max quote reached error.</p>
+  </header>
+
+  <div class="actions">
+    <label class="btn btn-primary">
+      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+      </svg>
+      Upload Resume (PDF)
+      <input type="file" (change)="onFileChange($event)" accept="application/pdf" />
+    </label>
+
+    @if (skills() || linkedinPost() || loading() || generatingPost()) {
+    <button class="btn btn-clear" (click)="clear()">
+      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+      </svg>
+      Clear Everything
+    </button>
+    }
+  </div>
+
+  @if (error()) {
+  <div class="error-banner">
+    <div class="error-message">
+      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      </svg>
+      <span>{{error()}}</span>
+    </div>
+    <button class="close-error" (click)="error.set(null)">&times;</button>
+  </div>
+  }
+
+  <div class="main-content">
+    <!-- Skills Card -->
+    <div class="card">
+      <div class="card-header">
+        <h2>Extracted Skills</h2>
+        @if (skills() && !loading()) {
+        <button class="btn-copy" (click)="copyToClipboard(getFormattedSkills())" title="Copy Skills">
+          <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+          </svg>
+        </button>
+        }
+      </div>
+
+      <!-- Loading State for Skills -->
+      @if (loading()) {
+      <div class="loader-container">
+        <div class="spinner skills">
+          <svg viewBox="0 0 50 50">
+            <circle cx="25" cy="25" r="20" fill="none"></circle>
+          </svg>
+        </div>
+        <p>Parsing PDF & Extracting Skills...</p>
+      </div>
+      }
+
+      <!-- Skills Display -->
+      @if (skills() && !loading()) {
+      <div class="skill-groups">
+        @if (skills().technical_skills?.length) {
+        <div class="skill-group">
+          <h3>Technical Skills</h3>
+          <div class="badges">
+            @for (s of skills().technical_skills; track s) {
+            <span class="badge">{{s}}</span>
+            }
+          </div>
+        </div>
+        }
+
+        @if (skills().soft_skills?.length) {
+        <div class="skill-group">
+          <h3>Soft Skills</h3>
+          <div class="badges">
+            @for (s of skills().soft_skills; track s) {
+            <span class="badge soft">{{s}}</span>
+            }
+          </div>
+        </div>
+        }
+
+        @if (skills().tools_and_platforms?.length) {
+        <div class="skill-group">
+          <h3>Tools & Platforms</h3>
+          <div class="badges">
+            @for (s of skills().tools_and_platforms; track s) {
+            <span class="badge tools">{{s}}</span>
+            }
+          </div>
+        </div>
+        }
+
+        @if (skills().languages?.length) {
+        <div class="skill-group">
+          <h3>Languages</h3>
+          <div class="badges">
+            @for (s of skills().languages; track s) {
+            <span class="badge lang">{{s}}</span>
+            }
+          </div>
+        </div>
+        }
+      </div>
+      }
+
+      <!-- Empty State -->
+      @if (!skills() && !loading()) {
+      <div class="empty-state">
+        <div class="icon">📄</div>
+        <p>No skills extracted yet.</p>
+      </div>
+      }
+    </div>
+
+    <!-- LinkedIn Post Card -->
+    <div class="card">
+      <div class="card-header">
+        <h2>LinkedIn Post</h2>
+        @if (linkedinPost() && !generatingPost()) {
+        <button class="btn-copy" (click)="copyToClipboard(linkedinPost()!)" title="Copy Post">
+          <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+          </svg>
+        </button>
+        }
+      </div>
+
+      <!-- Loading State for Post -->
+      @if (generatingPost()) {
+      <div class="loader-container">
+        <div class="spinner post">
+          <svg viewBox="0 0 50 50">
+            <circle cx="25" cy="25" r="20" fill="none"></circle>
+          </svg>
+        </div>
+        <p>Crafting your personal post...</p>
+      </div>
+      }
+
+      <!-- Post Display -->
+      @if (linkedinPost() && !generatingPost()) {
+      <div class="post-content">
+        {{linkedinPost()}}
+      </div>
+      }
+
+      <!-- Empty State -->
+      @if (!linkedinPost() && !generatingPost()) {
+      <div class="empty-state">
+        <div class="icon">✍️</div>
+        <p>Generate a professional post based on your skills.</p>
+      </div>
+      }
+    </div>
+  </div>
+</div>

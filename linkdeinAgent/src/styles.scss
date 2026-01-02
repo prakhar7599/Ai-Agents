@@ -1,0 +1,376 @@
+/* =======================
+   GLOBAL RESET
+======================= */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    min-height: 100%;
+    background:
+        radial-gradient(1200px 600px at 50% -20%,
+            rgba(124, 124, 255, 0.35),
+            transparent 60%),
+        linear-gradient(135deg, #05050f 0%, #120a2a 50%, #05050f 100%);
+    color: #f8fafc;
+    font-family: Inter, system-ui, sans-serif;
+}
+
+app-root {
+    display: block;
+    min-height: 100vh;
+}
+
+/* =======================
+   CONTAINER
+======================= */
+.container {
+    max-width: 1460px;
+    margin: 0 auto;
+}
+
+/* =======================
+   HEADER
+======================= */
+header {
+    text-align: center;
+    margin-bottom: 56px;
+
+    h1 {
+        font-size: 3.2rem;
+        font-weight: 900;
+        background: linear-gradient(90deg, #a78bfa, #f472b6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    p {
+        max-width: 620px;
+        margin: 12px auto 0;
+        font-size: 1.05rem;
+        color: #9aa4c7;
+    }
+}
+
+/* =======================
+   ACTION BUTTONS
+======================= */
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin-bottom: 44px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 30px;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: 14px;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+    &-primary {
+        background: linear-gradient(135deg, #7c7cff, #8b5cf6);
+        color: #fff;
+        box-shadow: 0 0 30px rgba(124, 124, 255, 0.65);
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 45px rgba(124, 124, 255, 0.85);
+        }
+
+        input {
+            display: none;
+        }
+    }
+
+    &-clear {
+        background: rgba(255, 255, 255, 0.06);
+        color: #f8fafc;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(12px);
+
+        &:hover {
+            transform: translateY(-2px);
+        }
+    }
+}
+
+/* =======================
+   ERROR BANNER
+======================= */
+.error-banner {
+    background: rgba(220, 38, 38, 0.15);
+    border: 1px solid rgba(220, 38, 38, 0.3);
+    color: #fca5a5;
+    padding: 14px 24px;
+    border-radius: 12px;
+    margin-bottom: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(8px);
+    animation: slideDown 0.3s ease;
+
+    .error-message {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 500;
+    }
+
+    .close-error {
+        background: none;
+        border: none;
+        color: #fca5a5;
+        font-size: 1.5rem;
+        cursor: pointer;
+        opacity: 0.7;
+        padding: 0 4px;
+        transition: opacity 0.2s;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* =======================
+   MAIN GRID
+======================= */
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+
+    @media (max-width: 900px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =======================
+   GLASS CARD
+======================= */
+.card {
+    display: flex;
+    flex-direction: column;
+    background: rgba(20, 20, 40, 0.78);
+    backdrop-filter: blur(18px);
+    border-radius: 26px;
+    border: 1px solid rgba(124, 124, 255, 0.18);
+    padding: 32px;
+    min-height: 420px;
+    position: relative;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+        0 20px 60px rgba(0, 0, 0, 0.6);
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 26px;
+        flex-shrink: 0;
+
+        h2 {
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.45rem;
+
+            &::before {
+                content: '';
+                width: 4px;
+                height: 22px;
+                border-radius: 4px;
+                background: linear-gradient(#7c7cff, #f472b6);
+            }
+        }
+    }
+
+    .btn-copy {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #9aa4c7;
+        padding: 8px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border-color: rgba(124, 124, 255, 0.4);
+        }
+    }
+}
+
+/* =======================
+   SKILLS
+======================= */
+.skill-groups {
+    flex: 1;
+}
+
+.skill-group h3 {
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    color: #9aa4c7;
+    margin-bottom: 12px;
+}
+
+.badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.badge {
+    padding: 6px 14px;
+    font-size: 0.8rem;
+    border-radius: 999px;
+    background: rgba(124, 124, 255, 0.12);
+    border: 1px solid rgba(124, 124, 255, 0.25);
+    color: #c7d2fe;
+}
+
+/* =======================
+   POST CONTENT
+======================= */
+.post-content {
+    flex: 1;
+    white-space: pre-wrap;
+    line-height: 1.7;
+    color: #d6dbf5;
+}
+
+/* =======================
+   EMPTY STATE
+======================= */
+.empty-state {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #9aa4c7;
+    padding-bottom: 40px;
+
+    .icon {
+        font-size: 3rem;
+        opacity: 0.35;
+        margin-bottom: 14px;
+    }
+
+    p {
+        margin: 0;
+    }
+}
+
+/* =======================
+   LOADING OVERLAY
+======================= */
+.loader-container {
+    position: absolute;
+    inset: 0;
+    background: rgba(5, 5, 15, 0.75);
+    backdrop-filter: blur(6px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    z-index: 20;
+}
+
+.loader-container p {
+    font-size: 0.95rem;
+    color: #e5e7eb;
+    opacity: 0.85;
+}
+
+/* =======================
+   SPINNER
+======================= */
+.spinner {
+    width: 54px;
+    height: 54px;
+}
+
+.spinner svg {
+    width: 100%;
+    height: 100%;
+    animation: rotate 1.2s linear infinite;
+}
+
+.spinner circle {
+    stroke-width: 4;
+    stroke-linecap: round;
+    fill: none;
+    stroke-dasharray: 90 150;
+    stroke-dashoffset: 0;
+    animation: dash 1.4s ease-in-out infinite;
+}
+
+/* Color variants */
+.spinner.skills circle {
+    stroke: #7c7cff;
+}
+
+.spinner.post circle {
+    stroke: #f472b6;
+}
+
+/* =======================
+   ANIMATIONS
+======================= */
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes dash {
+    0% {
+        stroke-dasharray: 1 150;
+        stroke-dashoffset: 0;
+    }
+
+    50% {
+        stroke-dasharray: 90 150;
+        stroke-dashoffset: -35;
+    }
+
+    100% {
+        stroke-dasharray: 90 150;
+        stroke-dashoffset: -124;
+    }
+}
