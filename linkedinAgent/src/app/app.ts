@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import * as pdfjsLib from 'pdfjs-dist';
-import { extractSkills } from './linkdeinAiAgent/skillExtractAgent';
-import { generateLinkedInPost } from './linkdeinAiAgent/linkdeinPostAgent';
+import { extractSkills } from './linkedinAiAgent/skillExtractAgent';
+import { generateLinkedInPost } from './linkedinAiAgent/linkedinPostAgent';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc =
   'https://cdn.jsdelivr.net/npm/pdfjs-dist@5.4.530/build/pdf.worker.min.mjs';
