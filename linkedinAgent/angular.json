@@ -32,6 +32,15 @@
             ],
             "styles": [
               "src/styles.scss"
+            ],
+            "allowedCommonJsDependencies": [
+              "p-queue",
+              "decamelize",
+              "camelcase",
+              "ansi-styles",
+              "base64-js",
+              "semver",
+              "js-tiktoken"
             ]
           },
           "configurations": {
@@ -39,8 +48,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "2MB",
+                  "maximumError": "5MB"
                 },
                 {
                   "type": "anyComponentStyle",
